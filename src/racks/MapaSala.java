@@ -15,25 +15,28 @@ public class MapaSala {
 	public static void main(String[] args) {
 		MapaSala ms = new MapaSala();
 		
-		//BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		//System.out.print("Informe os Racks:");
-	//	try {
-		//	String entrada = br.readLine();
-			//ms.iniciarMapa();
-			//ms.imprimirMapa();
-			ms.lerArquivo();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Informe o caminho do arquivo: ");
+		try {
+			String entrada = br.readLine();
+			ms.iniciarMapa();
+			ms.imprimirMapa();
+			ms.lerArquivo(entrada);
 			//String rota = ms.definirRota(entrada);
 			//ms.calcularDistanciaTotal(rota);
-	//	} catch (IOException e) {
-	//		e.printStackTrace();
-//		}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void lerArquivo() {
+	private void lerArquivo(String entrada) {
 		try {
-			Scanner scanner = new Scanner(new FileReader("C:\\Temp\\racks.csv"));
+			Scanner scanner = new Scanner(new FileReader(entrada));
 			while (scanner.hasNext()) {
-				System.out.println(scanner.next());
+				String enter = scanner.next();
+				System.out.print(enter);
+				String rota = definirRota(enter);
+				calcularDistanciaTotal(rota);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -73,7 +76,7 @@ public class MapaSala {
 				}
 			}
 		}
-		System.out.println("A distancia é de " + distanciaTotal + " quadros.");
+		System.out.print(" - " + distanciaTotal + " quadros.");
 		System.out.println(distanciaTotal * 60 + " centimetros");
 
 	}
