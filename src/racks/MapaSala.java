@@ -4,12 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class MapaSala {
 	// 30 colunas
 	// 16 linhas
-
+	
+	private int alturaRack = 300;
 	Rack[][] mapa = new Rack[16][30];
 
 	public static void main(String[] args) {
@@ -20,7 +22,7 @@ public class MapaSala {
 		try {
 			String entrada = br.readLine();
 			ms.iniciarMapa();
-			ms.imprimirMapa();
+			//ms.imprimirMapa();
 			ms.lerArquivo(entrada);
 			//String rota = ms.definirRota(entrada);
 			//ms.calcularDistanciaTotal(rota);
@@ -61,7 +63,8 @@ public class MapaSala {
 	
 	private void calcularDistanciaTotal(String rota) {
 		String[] racks = rota.split("-");
-		int distanciaTotal = 0;
+		int distanciaQuadros = 0;
+		double distanciaMetros = 0d;
 		int distancia = 0;
 		for (int i = 0; i < racks.length; i++) {
 			if (i + 1 < racks.length) {
@@ -70,14 +73,17 @@ public class MapaSala {
 				
 				distancia = calcularDistancia(inicio, fim);
 				if (distancia > 0) {
-					distanciaTotal +=  distancia + 1;
+					distanciaQuadros +=  distancia + 1;
 				} else {
 					break;
 				}
 			}
 		}
-		System.out.print(" - " + distanciaTotal + " quadros.");
-		System.out.println(distanciaTotal * 60 + " centimetros");
+		distanciaMetros = ((distanciaQuadros * 60) + (2* alturaRack)) * 0.01;
+		DecimalFormat df = new DecimalFormat("###.##");
+		
+		System.out.print("\t" + distanciaQuadros + " quadros \t");
+		System.out.println(df.format(distanciaMetros) + " metros");
 
 	}
 
